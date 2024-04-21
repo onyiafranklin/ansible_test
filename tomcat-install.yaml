@@ -20,25 +20,25 @@
       command: java --version
     - name: create user
       user:
-        name: {{tomcat_user}}
+        name: '{{tomcat_user}}'
     - name: Create group
       group:
-        name: {{tomcat_user}}
+        name: '{{tomcat_user}}'
     - name: create tomcat directory
       file:
-        path: "/opt/tomcat"
-        owner: {{tomcat_user}}
-        group: {{tomcat_user}}
+        path: '{{tomcat_path}}'
+        owner: '{{tomcat_user}}'
+        group: '{{tomcat_user}}'
         mode: 755
         recurse: yes
     - name: Download tomcat and unarchive
       unarchive:
-      src: https://downloads.apache.org/tomcat/tomcat-9/v9.0.85/bin/apache-tomcat-9.0.85.tar.gz
-      dest: {{tomcat_path}}
-      remote_src: yes
-      extra_opts: [--strip-components=1]
+        src: https://downloads.apache.org/tomcat/tomcat-9/v9.0.85/bin/apache-tomcat-9.0.85.tar.gz
+        dest: '{{tomcat_path}}'
+        remote_src: yes
+        extra_opts: [--strip-components=1]
     - name: start tomcat server
-      command: nohup {{tomcat_path}}/bin/start.sh
+      command: nohup '{{tomcat_path}}'/bin/start.sh
     - name: allow TCP connections
       command: sudo ufw allow 8080/tcp
 

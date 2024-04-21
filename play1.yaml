@@ -1,0 +1,28 @@
+---
+- name: Play 1
+  hosts: localhost
+  vars:
+    software:
+      - name: python
+        required: true
+      - name: maven
+        required: true
+      - name: java
+        required : true
+      - name : gjango
+        required: false
+  tasks:
+    - name : installing  "{{item.name}}"
+      command: echo "hello {{item.name}}"
+      when: item.required==true
+      loop: "{{ software }}"
+
+    - name: creaet users
+      users:
+      command: echo "hello "
+      loop:
+        - anya
+        - bukky
+        - kola
+        - ebuka
+        - cloud computing

@@ -1,0 +1,47 @@
+---
+- name: Ansible playbook Learning
+  hosts: localhost
+
+  tasks:
+    - include_vars: vars.yaml
+
+    - name: display hello world
+      command: echo "hello world"
+
+    - name: execute date
+      command: date
+
+    - name: display content of file
+      command: cat /etc/resolv.conf
+
+    - name: display content of file
+      command: cat /etc/resolv.conf chdir=/etc
+
+    - name: add line to a file
+      lineinfile:
+        path: text.txt
+        line: 57.55.77.88
+
+
+    - name: add line to a file
+      lineinfile:
+        path: text.txt
+        line: '{{ip_address}}'
+
+    - name: echo the tool
+      command: 'echo {{tool}}'
+      register: contents
+
+
+    - name : gather facts
+      debug:
+        var: ansible_facts
+
+
+    - name: runtasks on condition
+      command: echo " this is not mac"
+      when: ansible_facts['os_family']=='Debian'
+
+    - name: runtasks on successful too installation
+      command: echo '{{tool}} is installed'
+      when: contents['stdout']=='python'

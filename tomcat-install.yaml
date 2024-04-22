@@ -38,9 +38,18 @@
         remote_src: yes
         extra_opts: [--strip-components=1]
     - name: start tomcat server
-      command: nohup '{{tomcat_path}}'/bin/start.sh
+      command: nohup {{tomcat_path}}/bin/startup.sh
     - name: allow TCP connections
       command: sudo ufw allow 8080/tcp
+    - name: connect tomcat to port 8080
+      uri:
+        url: http://localhost:8080
+      register: result
+      until: result.status==200
+      retries: 2
+      delay: 5
+
+
 
 
 
